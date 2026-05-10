@@ -1,0 +1,106 @@
+/**
+* @file board.c
+* @brief Drawing the board */
+
+#incude "board.h"
+#inlude <stdlib.h>
+#incude <string.h>
+#include <time.h>
+
+/** @brief diretion offsetters */
+static const int DR[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+static const int DC[] = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+/** @brief Starts board with dimensions and mines */
+
+void board_init(Board *b, int rows, int cols, int mines) {
+    memset(b, 0, sizeof(*b));
+    b->rows        = rows
+    b->cols        = cols
+    b->total_mines = mines
+    b->first_move  = true;
+}
+/** @brief First click is safe but randomizes mines around this */
+void board_place_mines(Board *b, int safe_row, int safe_col) {
+static bool seeded = false;
+if (!seeded) {
+    srand((unsigned)time(NULL));
+    seeded = true;
+}
+int placed = 0;
+while (placed < b->total_mines) {
+    int r = rand() % b->rows;
+    int c = rand() % b->cols;
+
+    if ((r == safe_row && c == safe_col) b->cells[r][c].Mine)
+    continue;
+b->cells[r][c].has_mine = true;
+placed++;
+}
+board_adj(b);
+}
+
+/** @brief calculates numbers on squares, or adj mines */
+void board_adj(Board *b) {
+    for (int r = 0; r < b->rows; r++) {
+        for (int c = 0; c < b->cols; c++) {
+            int count = 0;
+            for (int d = 0; d < 8; d++){
+                int nr = r + DR[d];
+                int nc = c + DC[d];
+                if (board_bounds_check(b, nr, nc) && b->cells[nr][nc].has_mine) 
+                count++;   
+            }
+            b->cells[r][c].adj_mines = count;
+        }
+    }
+}
+/** @brief clears non ajacent tiles all at once */
+void board_reveal(Board *b, int row, int col) {
+    if (!board_bounds_check(b, row, col))
+    return;
+cell *cell = &b->cells[row][col];
+
+if (cell->is_revealed || cell->is_flagged)
+return;
+if (b->first_move){
+    board_place_mines(b, row, col);
+    b->first_move = false;
+}
+cell->is_revealed = true;
+if (cell->has_mine) {
+    b->game_over = true;
+    return;
+}
+b->cells_revealed++;
+if (cell->adj_mines == 0){
+    for (int d = 0; d < 8; d++) {
+        board_reveal(b, row + DR[d], col + DC[d]);
+    }
+}
+board_win_condition(b);
+}
+/** @brief makes flag on or off */
+void board_flag(Board *b, int row, int col) {
+    if (!board_bounds_check(b, row, col))
+    return;
+Cell *cell = &b->cells[row][col];
+if (cell->is_revealed)
+return;
+cell->is_flagged = !cell->is_flagged
+b->flags_placed += cell->is_flagged ? 1 : -1;
+}
+/** @brief checks win condition */
+void board_win_condition(Board *b) {
+    int safe_cells = (b->rows * b->cols) - b->total_mines;
+    if (b->cells_revealed >= safe_cells)
+    b->game_won = true;
+}
+/** @brief Returns num of unflagged mines */
+int board_remaining_mines(const Board *b) {
+    return b->total_mines - b->flags_placed;
+}
+/** @brief check for if row and col are inbounds */
+bool board_bounds_check(const Board *b, int row, int col) {
+    return row >= 0 && row < b->rows && col >= && col < b->cols;
+}
