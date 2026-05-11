@@ -16,3 +16,5 @@ Reset my password, but I guess i needed to be on the CS server not just the NMT 
 The guy did not email me back yet with my temporary password so I started researching different ways and I figured out I can just sign up for an account myself. Still have not fully figured it out but I set up my account and tried for a while to get this to work instead. I also started coding smoe more gameplay.
 5-8-2026 4 hours
 We had the day off so I spent a good chunk of it writing code and trying to get this project done. 
+5-10-2026 6-7 hours
+Overall I wrote a lot of code. I didn't finish all of it but I plan to tomorrow. I still need to write some code for the variants I plan to add and the code that sends things to the terminal. I'll submit them tomorrow, but I ran out of time tonight. Everything should be working up untill now! I figured out the git and subitted the wrong things originally, but didn't realize untill I went to resubmit my final time for the night.
