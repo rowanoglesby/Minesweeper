@@ -1,11 +1,15 @@
 /** 
-* @brief this code draws everything to the terminal. Notcurses library was used here.
-* the screen should display the ammount of mies left, flags placed, and how to use controls,
-*along with the board.
+ * Rowan Oglesby
+ * 5-13-2026
+ * 900367291
+ * 
+ * @file ui.c
+ * @brief this code draws everything to the terminal. Notcurses library was used here.
+ * the screen should display the ammount of mies left, flags placed, and how to use controls,
+ *along with the board.
  */
 
-#include "ui.h"
-#include "variants.h" 
+#include "Extra_Definitions.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -97,8 +101,8 @@ void ui_draw_status(UI *ui, const Board *b, const GameConfig *cfg) {
 }
 
 /**
-* @brief Draws the cells, including highlighted cell, 
-*flagged cells, open cells, numbered cells, and mine cells
+ * @brief Draws the cells, including highlighted cell, 
+ *flagged cells, open cells, numbered cells, and mine cells
  */
 void ui_draw_cell(UI *ui, const Board *b, const GameConfig *cfg,
                   int row, int col, bool is_cursor) {

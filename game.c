@@ -5,7 +5,7 @@
  * 
  * @file game.c
  * @brief this code is for the game. It sets up the game,
- * deals with the imput, then decides when someone won or not.
+ * deals with the input, then decides when someone won or not.
  */
 
 #include "Extra_Definitions.h"
@@ -64,7 +64,7 @@ void game_run(struct notcurses *nc, const GameConfig *cfg) {
 }
 
 /*
- * Takes an imput and runs it ot update board
+ * Takes an input and runs it ot update board
  */
 void game_handle_input(GameState *gs, InputEvent ev) {
     int target_row = gs->cursor_row;

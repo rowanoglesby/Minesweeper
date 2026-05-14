@@ -16,11 +16,11 @@
 #define Max_col 30
 
 /** @brief A cell for minesweeper */
-typedef Struct {
-   bool Mine
-   bool empty
-   bool flagged
-   int adj_mines
+typedef struct {
+   bool Mine;
+   bool empty;
+   bool flagged;
+   int adj_mines;
 } Cell;
 
 /** @brief full board state */
@@ -55,7 +55,7 @@ void board_flag(Board *b, int row, int col);
 void board_win_condition(Board *b);
 
 /** @brief number of mines left counter */
-int board_mines_left(cost Board *b);
+int board_mines_left(const Board *b);
 
 /** @brief check for if col and row are in parameters */
 bool board_bounds_check(const Board *b, int row, int col);

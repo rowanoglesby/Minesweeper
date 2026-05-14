@@ -40,7 +40,7 @@ while (placed < b->mines_total) {
 
     if ((r == safe_row && c == safe_col) b->cells[r][c].Mine)
     continue;
-b->cells[r][c].has_mine = true;
+b->cells[r][c].Mine = true;
 placed++;
 }
 board_adj(b);
@@ -54,7 +54,7 @@ void board_adj(Board *b) {
             for (int d = 0; d < 8; d++){
                 int nr = r + DR[d];
                 int nc = c + DC[d];
-                if (board_bounds_check(b, nr, nc) && b->cells[nr][nc].has_mine) 
+                if (board_bounds_check(b, nr, nc) && b->cells[nr][nc].Mine) 
                 count++;   
             }
             b->cells[r][c].adj_mines = count;
@@ -65,16 +65,16 @@ void board_adj(Board *b) {
 void board_reveal(Board *b, int row, int col) {
     if (!board_bounds_check(b, row, col))
     return;
-cell *cell = &b->cells[row][col];
+Cell *cell = &b->cells[row][col];
 
-if (cell->is_revealed || cell->is_flagged)
+if (cell->is_revealed || cell->flagged)
 return;
 if (b->first_move){
     board_place_mines(b, row, col);
     b->first_move = false;
 }
 cell->is_revealed = true;
-if (cell->has_mine) {
+if (cell->Mine) {
     b->game_over = true;
     return;
 }
@@ -93,8 +93,8 @@ void board_flag(Board *b, int row, int col) {
 Cell *cell = &b->cells[row][col];
 if (cell->is_revealed)
 return;
-cell->is_flagged = !cell->is_flagged;
-b->flags_placed += cell->is_flagged ? 1 : -1;
+cell->flagged = !cell->flagged;
+b->flags_placed += cell->flagged ? 1 : -1;
 }
 /** @brief checks win condition */
 void board_win_condition(Board *b) {

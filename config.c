@@ -74,7 +74,7 @@ static int run_menu(struct notcurses *nc, const char *title,
 
         notcurses_render(nc);
 
-        /** wait for imput, */
+        /** wait for input, */
         struct ncinput ni;
         notcurses_get_blocking(nc, &ni);
         if (ni.id == 'w' || ni.id == NCKEY_UP) {

@@ -3,8 +3,8 @@
  * 5-13-2026
  * 900367291
  * 
- * @fileimput.c
- * @brief deals with all of the imputs from the player so they can play the game.
+ * @file input.c
+ * @brief deals with all of the inputs from the player so they can play the game.
  */
 
 #include "Extra_Definitions.h"
@@ -13,7 +13,7 @@
 #define CELL_WIDTH       2
 
 /**
- * @brief Imputs for arrow keys and wasd keys
+ * @brief Inputs for arrow keys and wasd keys
  */
 static Action key_to_action(const struct ncinput *ni) {
     switch (ni->id) {
@@ -30,7 +30,7 @@ static Action key_to_action(const struct ncinput *ni) {
 }
 
 /** 
- * @brief Just takes in the mouse imput and correlates it to board square.
+ * @brief Just takes in the mouse input and correlates it to board square.
  * If outside of board does nothing.
  */
 static bool mouse_to_board(int term_row, int term_col,
@@ -48,7 +48,7 @@ static bool mouse_to_board(int term_row, int term_col,
 }
 
 /**
- *Waits for imput from player, either mouse or keys.
+ * Waits for input from player, either mouse or keys.
  */
 InputEvent input_get(struct notcurses *nc, int board_rows, int board_cols) {
     InputEvent ev = { .action = ACTION_NONE, .row = -1, .col = -1 };
