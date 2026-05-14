@@ -1,8 +1,13 @@
-/**
+/** 
+ * Rowan Oglesby
+ * 5-13-2026
+ * 900367291
+ * 
+ * @file variants.c
  * @brief For the three variants in the game
  */
 
-#include "variants.h"
+#include "Extra_Definitions.h"
 #include "board.h"
 #include <stdlib.h>
 
@@ -16,8 +21,8 @@ bool variant_is_dark_tile(int row, int col) {
 }
 
 /**
-* @brief for checkerboard makes mines on dark worth more than light spaces, 
-*reorgainizing mine placement
+ * @brief for checkerboard makes mines on dark worth more than light spaces, 
+ *reorgainizing mine placement
  */
 void variant_checkerboard_calc(Board *b) {
     for (int r = 0; r < b->rows; r++) {

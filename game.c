@@ -1,14 +1,18 @@
 /** 
+ * Rowan Oglesby
+ * 5-13-2026
+ * 900367291
+ * 
+ * @file game.c
  * @brief this code is for the game. It sets up the game,
  * deals with the imput, then decides when someone won or not.
  */
 
-#include "game.h"
-#include "variants.h"
+#include "Extra_Definitions.h"
 #include <stdlib.h>
 #include <string.h>
 /** 
-* @brief Clears everything form old game and sets up board.
+ * @brief Clears everything form old game and sets up board.
  */
 void game_init(GameState *gs, struct notcurses *nc, const GameConfig *cfg) {
     memset(gs, 0, sizeof(*gs));
@@ -24,8 +28,8 @@ void game_init(GameState *gs, struct notcurses *nc, const GameConfig *cfg) {
 
 
 /** 
-* Runs the game
-*/
+ * Runs the game
+ */
 void game_run(struct notcurses *nc, const GameConfig *cfg) {
     GameState gs;
     game_init(&gs, nc, cfg);

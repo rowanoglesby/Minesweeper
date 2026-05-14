@@ -1,8 +1,13 @@
 /** 
- * This is the homepage for the game and sets up the place wherre players input gamemodes, etc.
+ * Rowan Oglesby
+ * 5-13-2026
+ * 900367291
+ * 
+ * @file cofig.c
+ * @brief This is the homepage for the game and sets up the place wherre players input gamemodes, etc.
  */
 
-#include "config.h"
+#include "Extra_Definitions.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -40,7 +45,7 @@ static void clear_screen(struct notcurses *nc) {
 /* Shows the title */
 static void draw_banner(struct ncplane *std) {
     ncplane_set_fg_rgb8(std, 255, 200, 0);
-    MINESWEEPER
+    "MINESWEEPER";
     ncplane_putstr_yx(std, 7, 2, "  A terminal Minesweeper — use wasd to move, f to flag, c to clear");
 }
 

@@ -1,8 +1,13 @@
 /** 
-* @brief deals with all of the imputs from the player so they can play the game.
-*/
+ * Rowan Oglesby
+ * 5-13-2026
+ * 900367291
+ * 
+ * @fileimput.c
+ * @brief deals with all of the imputs from the player so they can play the game.
+ */
 
-#include "input.h"
+#include "Extra_Definitions.h"
 #include <stdlib.h>
 #define BOARD_ORIGIN_ROW 2
 #define CELL_WIDTH       2
@@ -43,7 +48,7 @@ static bool mouse_to_board(int term_row, int term_col,
 }
 
 /**
-*Waits for imput from player, either mouse or keys.
+ *Waits for imput from player, either mouse or keys.
  */
 InputEvent input_get(struct notcurses *nc, int board_rows, int board_cols) {
     InputEvent ev = { .action = ACTION_NONE, .row = -1, .col = -1 };
