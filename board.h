@@ -1,6 +1,7 @@
 /**
-* @file board.c
-* @brief Drawing the board */
+* @file board.h
+* @brief Drawing the board 
+*/
 
 #incude "board.h"
 #inlude <stdlib.h>
