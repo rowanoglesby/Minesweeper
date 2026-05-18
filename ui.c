@@ -10,6 +10,7 @@
  */
 
 #include "Extra_Definitions.h"
+#include "board.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -74,7 +75,7 @@ void ui_draw_status(UI *ui, const Board *b, const GameConfig *cfg) {
     char buf[128];
 
     /**Mines left*/
-    int remaining = b->total_mines - b->flags_placed;
+    int remaining = b->mines_total - b->flags_placed;
     ncplane_set_fg_rgb8(std, 255, 220, 0);
     snprintf(buf, sizeof(buf), " ⚑ Mines: %d ", remaining);
     ncplane_putstr_yx(std, 0, 0, buf);
@@ -90,7 +91,7 @@ void ui_draw_status(UI *ui, const Board *b, const GameConfig *cfg) {
 
     /**placed flags*/
     ncplane_set_fg_rgb8(std, 180, 180, 180);
-    snprintf(buf, sizeof(buf), "%d / %d flags ", b->flags_placed, b->total_mines);
+    snprintf(buf, sizeof(buf), "%d / %d flags ", b->flags_placed, b->mines_total);
     int right_x = (int)term_cols - (int)strlen(buf);
     if (right_x < 0) right_x = 0;
     ncplane_putstr_yx(std, 0, right_x, buf);
@@ -123,19 +124,19 @@ void ui_draw_cell(UI *ui, const Board *b, const GameConfig *cfg,
     }
 
     /**Flaged not revealed tiles*/
-    if (cell->is_flagged && !cell->is_revealed) {
+    if (cell->flagged && !cell->empty) {
         if (!is_cursor) ncplane_set_bg_rgb8(std, 40, 40, 40);
         ncplane_set_fg_rgb8(std, 255, 180, 0);
         ncplane_putstr_yx(std, screen_row, screen_col, GLYPH_FLAG);
 
     /**Not revealed tiles*/
-    } else if (!cell->is_revealed) {
+    } else if (!cell->empty) {
         if (!is_cursor) ncplane_set_bg_rgb8(std, 50, 50, 50);
         ncplane_set_fg_rgb8(std, 120, 120, 120);
         ncplane_putstr_yx(std, screen_row, screen_col, GLYPH_HIDDEN);
 
     /**Shows mines after game is over*/
-    } else if (cell->has_mine) {
+    } else if (cell->Mine) {
         if (!is_cursor) ncplane_set_bg_rgb8(std, 80, 0, 0);
         ncplane_set_fg_rgb8(std, 255, 60, 60);
         ncplane_putstr_yx(std, screen_row, screen_col, GLYPH_MINE);
@@ -185,7 +186,7 @@ void ui_draw_cell(UI *ui, const Board *b, const GameConfig *cfg,
 /**
 * @brief makes sure game doesnt break when trying to quit.
  */
-void ui_draw_game_over(UI *ui, const Board *b) {
+void ui_draw_game_over(UI *ui, Board *b) {
     ncplane_erase(ui->std);
 
     GameConfig dummy_cfg = {0};  /** for draw- variants or not*/
@@ -195,7 +196,7 @@ void ui_draw_game_over(UI *ui, const Board *b) {
             Cell original = b->cells[r][c];
 
             Cell temp = original;
-            if (temp.has_mine) temp.is_revealed = true;
+            if (temp.Mine) temp.empty = true;
 
             b->cells[r][c] = temp;
             ui_draw_cell(ui, b, &dummy_cfg, r, c, false);

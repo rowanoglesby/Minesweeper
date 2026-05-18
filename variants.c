@@ -36,11 +36,11 @@ void variant_checkerboard_calc(Board *b) {
                 int nc = c + DC[d];
 
                 /**Check for out of bounds */
-                if (!board_in_bounds(b, nr, nc)) continue;
+                if (!board_bounds_check(b, nr, nc)) continue;
 
 
                 /**Makes sure all mines are not next to eachother*/
-                if (!b->cells[nr][nc].has_mine) continue;
+                if (!b->cells[nr][nc].Mine) continue;
 
                 /**Dark is two, light is one*/
                 if (variant_is_dark_tile(nr, nc)) {

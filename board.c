@@ -1,7 +1,7 @@
 
 /**
  * Rowan Oglesby
- * 5-13-2026
+ * 5-17-2026
  * 900367291
  * 
  * @file board.c
@@ -19,7 +19,7 @@ static const int DC[] = {-1, 0, 1, -1, 1, -1, 0, 1};
 
 /** @brief Starts board with dimensions and mines */
 
-void board_init(Board *b, int rows, int cols, int mines) {
+void board_initial(Board *b, int rows, int cols, int mines) {
     memset(b, 0, sizeof(*b));
     b->rows        = rows;
     b->cols        = cols;
@@ -38,10 +38,10 @@ while (placed < b->mines_total) {
     int r = rand() % b->rows;
     int c = rand() % b->cols;
 
-    if ((r == safe_row && c == safe_col) b->cells[r][c].Mine)
-    continue;
-b->cells[r][c].Mine = true;
-placed++;
+    if ((r == safe_row && c == safe_col) || b->cells[r][c].Mine)
+        continue;
+    b->cells[r][c].Mine = true;
+    placed++;
 }
 board_adj(b);
 }
@@ -67,18 +67,18 @@ void board_reveal(Board *b, int row, int col) {
     return;
 Cell *cell = &b->cells[row][col];
 
-if (cell->is_revealed || cell->flagged)
+if (cell->empty || cell->flagged)
 return;
 if (b->first_move){
     board_place_mines(b, row, col);
     b->first_move = false;
 }
-cell->is_revealed = true;
+cell->empty = true;
 if (cell->Mine) {
     b->game_over = true;
     return;
 }
-b->cells_revealed++;
+b->open_cell++;
 if (cell->adj_mines == 0){
     for (int d = 0; d < 8; d++) {
         board_reveal(b, row + DR[d], col + DC[d]);
@@ -91,7 +91,7 @@ void board_flag(Board *b, int row, int col) {
     if (!board_bounds_check(b, row, col))
     return;
 Cell *cell = &b->cells[row][col];
-if (cell->is_revealed)
+if (cell->empty)
 return;
 cell->flagged = !cell->flagged;
 b->flags_placed += cell->flagged ? 1 : -1;
@@ -99,7 +99,7 @@ b->flags_placed += cell->flagged ? 1 : -1;
 /** @brief checks win condition */
 void board_win_condition(Board *b) {
     int safe_cells = (b->rows * b->cols) - b->mines_total;
-    if (b->cells_revealed >= safe_cells)
+    if (b->open_cell >= safe_cells)
     b->won = true;
 }
 /** @brief Returns num of unflagged mines */
@@ -108,5 +108,5 @@ int board_remaining_mines(const Board *b) {
 }
 /** @brief check for if row and col are inbounds */
 bool board_bounds_check(const Board *b, int row, int col) {
-    return row >= 0 && row < b->rows && col >= && col < b->cols;
+    return row >= 0 && row < b->rows && col >= 0 && col < b->cols;
 }

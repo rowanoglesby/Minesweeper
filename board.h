@@ -7,7 +7,7 @@
  * @brief board structures and func. declarations
  * Defines cell and board type, size and distribution of squares
  */
-#include BOARD_H
+#ifndef BOARD_H
 #define BOARD_H
 #include <stdbool.h>
 
@@ -24,7 +24,7 @@ typedef struct {
 } Cell;
 
 /** @brief full board state */
-typedef struct {
+typedef struct Board {
    Cell cells[Max_row][Max_col];
    int rows;
    int cols;

@@ -1,10 +1,10 @@
-/**Make a file code
-# @ file Makefile # @Buildsystem for Minesweeper**/
+#Make a file code
+# @ file Makefile # @Buildsystem for Minesweeper
 CC = gcc
-CFLAGS = -Wa;; -Wextra -std=c11 -g $(shell pkg-config --cflags notcurses)
-LDFLAGS = $(shell pkg-onfig --libs notcurses)
+CFLAGS = -Wall -Wextra -std=c11 -g $(shell pkg-config --cflags notcurses)
+LDFLAGS = $(shell pkg-config --libs notcurses)
 
-TARGET = minesweeper
+TARGET = Minesweeper
 SRCS = main.c board.c ui.c input.c config.c game.c variants.c
 OBJS = $(SRCS:.c=.o)
 
@@ -14,7 +14,7 @@ $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-Clean:
+clean:
 	rm -f $(OBJS) $(TARGET)
 valgrind: $(TARGET)
 	valgrind --leak-check=full --track-origins=yes ./$(TARGET)

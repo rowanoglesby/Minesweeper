@@ -22,7 +22,7 @@ void game_init(GameState *gs, struct notcurses *nc, const GameConfig *cfg) {
     gs->cursor_col = 0;
     gs->running    = true;
 
-    board_init(&gs->board, cfg->rows, cfg->cols, cfg->mines);
+    board_initial(&gs->board, cfg->rows, cfg->cols, cfg->mines);
     ui_init(&gs->ui, nc);
 }
 
@@ -54,7 +54,7 @@ void game_run(struct notcurses *nc, const GameConfig *cfg) {
             break;
         }
 
-        if (gs.board.game_won) {
+        if (gs.board.won) {
             ui_draw_win(&gs.ui, &gs.board);
             break;
         }

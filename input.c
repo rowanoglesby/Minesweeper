@@ -79,9 +79,9 @@ InputEvent input_get(struct notcurses *nc, int board_rows, int board_cols) {
 *Checks to make sure the mouse works. If it doesnt then the arrow keys work.
  */
 bool input_enable_mouse(struct notcurses *nc) {
-    return notcurses_mouse_enable(nc, NCMICE_BUTTON_EVENT) == 0;
+    return notcurses_mice_enable(nc, NCMICE_BUTTON_EVENT) == 0;
 }
 
 void input_disable_mouse(struct notcurses *nc) {
-    notcurses_mouse_disable(nc);
+    notcurses_mice_disable(nc);
 }

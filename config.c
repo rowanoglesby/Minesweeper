@@ -45,7 +45,7 @@ static void clear_screen(struct notcurses *nc) {
 /* Shows the title */
 static void draw_banner(struct ncplane *std) {
     ncplane_set_fg_rgb8(std, 255, 200, 0);
-    "MINESWEEPER";
+    ncplane_putstr_yx(std, 6, 2, "MINESWEEPER");
     ncplane_putstr_yx(std, 7, 2, "  A terminal Minesweeper — use wasd to move, f to flag, c to clear");
 }
 
